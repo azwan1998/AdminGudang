@@ -24,7 +24,6 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -35,3 +34,5 @@ Route::middleware([
     })->name('dashboard');
     Route::resource('users',UserController::class);
 });
+Route::resource('users', UserController::class);
+Route::resource('posts', PostController::class)->except('show');

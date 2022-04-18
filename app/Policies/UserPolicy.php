@@ -15,9 +15,11 @@ class UserPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user) //kalo di controller index()
     {
-        //
+        if ($user->checkRole('user')) {
+            return true;
+        }
     }
 
     /**
@@ -27,9 +29,11 @@ class UserPolicy
      * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, User $model)
+    public function view(User $user, User $model) //kalo di controller show()
     {
-        //
+        if ($user->checkRole('user')) {
+            return true;
+        }
     }
 
     /**
@@ -38,9 +42,9 @@ class UserPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user)
+    public function create(User $user) //kalo di controller create(), store()
     {
-        //
+        return false;
     }
 
     /**
@@ -50,9 +54,9 @@ class UserPolicy
      * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, User $model)
+    public function update(User $user, User $model) //kalo di controller edit(). update()
     {
-        //
+        return $user->id === $model->id;
     }
 
     /**
@@ -62,9 +66,9 @@ class UserPolicy
      * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, User $model)
+    public function delete(User $user, User $model) //kalo di controller destroy()
     {
-        //
+        return false;
     }
 
     /**

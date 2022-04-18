@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use App\Traits\HasCan;
 
 class User extends Authenticatable
 {
@@ -17,6 +18,7 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use HasCan;
 
     /**
      * The attributes that are mass assignable.
@@ -27,6 +29,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -57,5 +60,34 @@ class User extends Authenticatable
      */
     protected $appends = [
         'profile_photo_url',
+        'can'
     ];
+
+    public function getCreatedAtAttribute($value) {
+       return now()->parse($value)->timezone(config('app.timezone'))->format('d F Y, H:i:s');
+    }
+
+    public function getUpdatedAtAttribute($value) {
+        return now()->parse($value)->timezone(config('app.timezone'))->format('d F Y, H:i:s');
+     }
+
+     public function checkRole($role)
+     {
+         return $this->role === $role;
+     }
+
+     public function scopeFilter($query, array $filters)
+     {
+         $query->when($filters['search'] ?? null, function ($query, $search) {
+             $query->where(function ($query) use ($search) {
+                 $query->where('title', 'like', '%' . $search . '%')
+                     ->orWhere('content', 'like', '%' . $search . '%');
+             });
+         });
+     }
+
+     public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }
