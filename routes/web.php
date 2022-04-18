@@ -32,7 +32,7 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
-    Route::resource('users',UserController::class);
+    // Route::resource('users',UserController::class);
 });
 Route::resource('users', UserController::class);
 Route::resource('posts', PostController::class)->except('show');
