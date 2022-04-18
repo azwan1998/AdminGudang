@@ -3,7 +3,7 @@
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 User Index
-                <JetNavLink class="float-right" :href="route('users.create')" v-if="$page.props.users.create">
+                <JetNavLink class="float-right" :href="route('users.create')" v-if="$page.props.permission.users.create">
                 <JetButton >Create</JetButton>
                 </JetNavLink>
             </h2>
