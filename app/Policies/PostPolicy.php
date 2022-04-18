@@ -18,7 +18,7 @@ class PostPolicy
      */
     public function viewAny(User $user)
     {
-        if ($user->checkRole('user')) {
+        if ($user->checkRole('user','admin')) {
             return true;
         }
     }
@@ -32,7 +32,7 @@ class PostPolicy
      */
     public function view(User $user, Post $post)
     {
-        if ($user->checkRole('user')) {
+        if ($user->checkRole('user','admin')) {
             return true;
         }
     }
