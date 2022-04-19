@@ -44,7 +44,7 @@ class UserPolicy
      */
     public function create(User $user) //kalo di controller create(), store()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -68,7 +68,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model) //kalo di controller destroy()
     {
-        return false;
+        return true;
     }
 
     /**
