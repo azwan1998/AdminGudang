@@ -19,15 +19,11 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
-Route::middleware([
+Route::get('/', HomeController::class);
+
+Route::get('/posts/{post}', PostShowController::class)->name('posts.show');
+
+Route::prefix('/admin')->middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
@@ -35,7 +31,11 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
-    // Route::resource('users',UserController::class);
+
+    Route::resource('users', UserController::class);
+    Route::resource('posts', PostController::class)->except('show');
 });
-Route::resource('users', UserController::class);
-Route::resource('posts', PostController::class)->except('show');
+
+
+
+

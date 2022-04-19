@@ -3,7 +3,7 @@
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Post Index
-                <JetNavLink class="float-right" :href="route('posts.create')" v-if="$page.props.posts.create">
+                <JetNavLink class="float-right" :href="route('posts.create')" v-if="$page.props.permission.posts.create">
                 <JetButton >Create</JetButton>
                 </JetNavLink>
             </h2>

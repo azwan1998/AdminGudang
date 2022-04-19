@@ -17,7 +17,7 @@ class UserPolicy
      */
     public function viewAny(User $user) //kalo di controller index()
     {
-        if ($user->checkRole('user','admin')) {
+        if ($user->checkRole('user')) {
             return true;
         }
     }
