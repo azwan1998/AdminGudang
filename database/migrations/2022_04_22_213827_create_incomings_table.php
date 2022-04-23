@@ -19,6 +19,7 @@ class CreateIncomingsTable extends Migration
             $table->string('kategori');
             $table->string('merk');
             $table->integer('jumlah');
+            $table->foreignId('user_id');
             $table->timestamps();
         });
     }
