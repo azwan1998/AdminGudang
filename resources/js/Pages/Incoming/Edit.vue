@@ -8,39 +8,64 @@
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <JetFormSection @submitted="updatePost">
+                <JetFormSection @submitted="updateincoming">
         <template #title>
-           Update Post
+           Update 
         </template>
 
         <template #description>
-            Update Postingan.
+            Edit Barang Masuk
         </template>
 
         <template #form>
 
-            <!-- Title -->
+            <!-- nama barang -->
             <div class="col-span-6 sm:col-span-4">
-              <jet-label for="title" value="Title" />
+              <jet-label for="nama_barang" value="Nama_barang" />
               <jet-input
-                id="title"
+                id="nama_barang"
                 type="text"
                 class="mt-1 block w-full"
-                v-model="form.title"
-                autocomplete="title"
+                v-model="form.nama_barang"
+                autocomplete="nama_barang"
               />
-              <jet-input-error :message="form.errors.title" class="mt-2" />
+              <jet-input-error :message="form.errors.nama_barang" class="mt-2" />
             </div>
-
-            <!-- Content -->
+            <!-- kategori -->
             <div class="col-span-6 sm:col-span-4">
-              <jet-label for="content" value="Content" />
-              <textarea
-                class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                v-model="form.content"
-                rows="10"
-              ></textarea>
-              <jet-input-error :message="form.errors.content" class="mt-2" />
+              <jet-label for="kategori" value="Kategori" />
+              <jet-input
+                id="kategori"
+                type="text"
+                class="mt-1 block w-full"
+                v-model="form.kategori"
+                autocomplete="kategori"
+              />
+              <jet-input-error :message="form.errors.kategori" class="mt-2" />
+            </div>
+            <!-- merk -->
+            <div class="col-span-6 sm:col-span-4">
+              <jet-label for="merk" value="Merk" />
+              <jet-input
+                id="merk"
+                type="text"
+                class="mt-1 block w-full"
+                v-model="form.merk"
+                autocomplete="merk"
+              />
+              <jet-input-error :message="form.errors.merk" class="mt-2" />
+            </div>
+            <!-- jumlah -->
+            <div class="col-span-6 sm:col-span-4">
+              <jet-label for="jumlah" value="Jumlah" />
+              <jet-input
+                id="jumlah"
+                type="text"
+                class="mt-1 block w-full"
+                v-model="form.jumlah"
+                autocomplete="jumlah"
+              />
+              <jet-input-error :message="form.errors.jumlah" class="mt-2" />
             </div>
         </template>
 
@@ -85,22 +110,24 @@ export default {
     JetSecondaryButton,
   },
 
-  props: ['post'],
+  props: ['incoming'],
 
   setup(props) {
     const form = useForm({
     _method: 'PUT',
-    title: props.post.title,
-    content: props.post.content,
+    nama_barang: props.incoming.nama_barang,
+    kategori: props.incoming.kategori,
+    merk: props.incoming.merk,
+    jumlah: props.incoming.jumlah,
     });
 
-     const updatePost = () => {
-      form.post(route("posts.update", props.post.id), {
+     const updateincoming = () => {
+      form.post(route("incomings.update", props.incoming.id), {
         preserveScroll: true,
       });
     };
 
-    return { form, updatePost };
+    return { form, updateincoming };
   },
 };
 </script>

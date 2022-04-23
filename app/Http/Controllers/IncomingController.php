@@ -20,6 +20,7 @@ class IncomingController extends Controller
      */
     public function index(Request $request)
     {
+        // dd($request);
         $queries = ['search', 'page'];
 
         return Inertia::render('Incoming/Index', [
@@ -46,6 +47,7 @@ class IncomingController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         $request->validate([
             'nama_barang' => 'required|string',
             'kategori' => 'required|string',
@@ -95,7 +97,7 @@ class IncomingController extends Controller
             'nama_barang' => 'required|string',
             'kategori' => 'required|string',
             'merk' => 'required|string',
-            'jumlah' => 'required|string',
+            'jumlah' => 'required|integer',
         ]);
 
         $incoming->update($request->only('nama_barang', 'kategori', 'merk', 'jumlah'));

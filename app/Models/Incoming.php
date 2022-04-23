@@ -42,9 +42,7 @@ class Incoming extends Model
         $query->when($filters['search'] ?? null, function ($query, $search) {
             $query->where(function ($query) use ($search) {
                 $query->where('nama_barang', 'like', '%' . $search . '%')
-                    ->orWhere('kategori', 'like', '%' . $search . '%')
-                    ->orWhere('merk', 'like', '%' . $search . '%')
-                    ->orWhere('jumlah', 'like', '%' . $search . '%');
+                    ->orWhere('kategori', 'like', '%' . $search . '%');
             });
         });
     }

@@ -65,6 +65,12 @@
                         >
                           Updated At
                         </th>
+                        <th
+                          scope="col"
+                          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Created At
+                        </th>
                         <th scope="col" class="relative px-6 py-3">
                           <span class="sr-only">Edit</span>
                         </th>
@@ -119,19 +125,18 @@
                             :href="route('incomings.show', incoming.id)"
                             class="text-indigo-600 hover:text-indigo-900"
                             v-if="incoming.can.view"
-                            >Show</JetNavLink
-                          >
+                            >Show
+                            </JetNavLink>
                           <JetNavLink
                             :href="route('incomings.edit', incoming.id)"
                             class="ml-2 text-indigo-600 hover:text-indigo-900"
                             v-if="incoming.can.update"
-                            >Edit</JetNavLink
-                          >
+                            >Edit
+                            </JetNavLink>
                           <button
                             @click="deleteincoming(incoming.id)"
                             class="ml-2 text-red-600 hover:text-red-900"
-                            v-if="incoming.can.delete"
-                          >
+                            v-if="incoming.can.delete">
                             Delete
                           </button>
                         </td>

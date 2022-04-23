@@ -8,15 +8,15 @@
 
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <jet-form-section @submitted="createPost">
-          <template #title> Create Post </template>
+        <jet-form-section @submitted="createincoming">
+          <template #title> Barang Masuk  </template>
 
-          <template #description> Membuat postingan. </template>
+          <template #description>Input Barang Masuk. </template>
 
           <template #form>
             <!-- Nama Barang -->
             <div class="col-span-6 sm:col-span-4">
-              <jet-label for="nama_barang" value="Nama Barang" />
+              <jet-label for="nama_barang" value="Nama_Barang" />
               <jet-input
                 id="nama_barang"
                 type="text"
@@ -58,7 +58,7 @@
               <jet-label for="jumlah" value="Jumlah" />
               <jet-input
                 id="jumlah"
-                type="text"
+                type="Integer"
                 class="mt-1 block w-full"
                 v-model="form.jumlah"
                 autocomplete="jumlah"
@@ -71,13 +71,13 @@
             <jet-action-message :on="form.recentlySuccessful" class="mr-3">
               Saved.
             </jet-action-message>
-
-            <jet-button
+              <jet-button
               :class="{ 'opacity-25': form.processing }"
               :disabled="form.processing"
             >
               Save
             </jet-button>
+            
           </template>
         </jet-form-section>
       </div>
@@ -120,7 +120,7 @@ export default {
     });
 
     const createincoming = () => {
-      form.incomings(route("incomings.store"));
+      form.post(route("incomings.store"));
     };
 
     return { form, createincoming };
