@@ -52,18 +52,18 @@ const logout = () => {
                                 <JetNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </JetNavLink>
-                                <JetNavLink :href="route('users.index')" :active="route().current('users.*')"
-                                v-if="$page.props.permission.users.viewAny">
-                                    Users
-                                </JetNavLink>
-                                <JetNavLink :href="route('posts.index')" :active="route().current('posts.*')"
-                                v-if="$page.props.permission.posts.viewAny">
-                                    Posts
+                                <JetNavLink :href="route('stocks.index')" :active="route().current('stocks.*')"
+                                v-if="$page.props.permission.stocks.viewAny">
+                                    Data Barang
                                 </JetNavLink>
                                 <JetNavLink :href="route('incomings.index')" :active="route().current('incomings.*')"
                                 v-if="$page.props.permission.incomings.viewAny">
                                     Barang Masuk
                                 </JetNavLink>
+                                <!-- <JetNavLink :href="route('exits.index')" :active="route().current('exits.*')"
+                                v-if="$page.props.permission.exits.viewAny">
+                                    Barang Keluar
+                                </JetNavLink> -->
                             </div>
                         </div>
 

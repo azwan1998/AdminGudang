@@ -2,10 +2,10 @@
     <AppLayout title="Dashboard">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Post Index
-                <JetNavLink class="float-right" :href="route('posts.create')" v-if="$page.props.permission.posts.create">
+                Stock Index
+                <!-- <JetNavLink class="float-right" :href="route('incomings.create')" v-if="$page.props.permission.incomings.create">
                 <JetButton >Create</JetButton>
-                </JetNavLink>
+                </JetNavLink> -->
             </h2>
         </template>
 
@@ -15,7 +15,7 @@
           type="text"
           class="block ml-2 mb-4 w-60"
           v-model="form.search"
-          placeholder="Cari post..."
+          placeholder="Cari barang.."
         />
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
           <div class="flex flex-col">
@@ -33,19 +33,31 @@
                           scope="col"
                           class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
-                          ID
+                          No
                         </th>
                         <th
                           scope="col"
                           class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
-                          Title
+                          Nama Barang
                         </th>
                         <th
                           scope="col"
                           class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
-                          Created At
+                          Kategori
+                        </th>
+                        <th
+                          scope="col"
+                          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Merk
+                        </th>
+                        <th
+                          scope="col"
+                          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Jumlah
                         </th>
                         <th
                           scope="col"
@@ -53,65 +65,85 @@
                         >
                           Updated At
                         </th>
+                        <th
+                          scope="col"
+                          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Created At
+                        </th>
                         <th scope="col" class="relative px-6 py-3">
                           <span class="sr-only">Edit</span>
                         </th>
                       </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                      <tr v-if="!posts.data.length">
+                      <tr v-if="!stocks.data.length">
                         <td class="p-4 text-center text-gray-900" colspan="5">
                           No data
                         </td>
                       </tr>
-                      <tr v-for="post in posts.data" :key="post.id">
+                      <tr v-for="stock in stocks.data" :key="stock.id">
                         <td
                           class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
                         >
-                          {{ post.id }}
+                          {{ stock.id }}
                         </td>
                         <td
                           class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
                         >
-                          {{ post.title }}
+                          {{ stock.nama_barang }}
                         </td>
                         <td
                           class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
                         >
-                          {{ post.created_at }}
+                          {{ stock.kategori }}
                         </td>
                         <td
                           class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
                         >
-                          {{ post.updated_at }}
+                          {{ stock.merk }}
+                        </td>
+                        <td
+                          class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
+                        >
+                          {{ stock.jumlah }}
+                        </td>
+                        <td
+                          class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
+                        >
+                          {{ stock.created_at }}
+                        </td>
+                        <td
+                          class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
+                        >
+                          {{ stock.updated_at }}
                         </td>
                         <td
                           class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"
                         >
                           <JetNavLink
-                            :href="route('posts.show', post.id)"
+                            :href="route('stocks.show', stock.id)"
                             class="text-indigo-600 hover:text-indigo-900"
-                            v-if="post.can.view"
-                            >Show</JetNavLink
-                          >
-                          <JetNavLink
-                            :href="route('posts.edit', post.id)"
+                            v-if="stocks.can.view"
+                            >Show
+                            </JetNavLink>
+                          <!-- <JetNavLink
+                            :href="route('incomings.edit', incoming.id)"
                             class="ml-2 text-indigo-600 hover:text-indigo-900"
-                            v-if="post.can.update"
-                            >Edit</JetNavLink
-                          >
+                            v-if="incoming.can.update"
+                            >Edit
+                            </JetNavLink>
                           <button
-                            @click="deletePost(post.id)"
+                            @click="deleteincoming(incoming.id)"
                             class="ml-2 text-red-600 hover:text-red-900"
-                            v-if="post.can.delete"
-                          >
+                            v-if="incoming.can.delete">
                             Delete
-                          </button>
+                          </button> -->
                         </td>
                       </tr>
                     </tbody>
                   </table>
-                  <JetPagination class="m-5" :links="posts.links" />
+                  <JetPagination class="m-5" :links="stocks.links" />
                 </div>
               </div>
             </div>
@@ -142,7 +174,7 @@ export default {
   },
 
   props: {
-    posts: Object,
+    stocks: Object,
     filters: Object,
   },
 
@@ -156,20 +188,20 @@ export default {
       const query = pickBy(form);
 
       Inertia.replace(
-        route("posts.index", Object.keys(query).length ? query : {})
+        route("stocks.index", Object.keys(query).length ? query : {})
       );
     });
 
-    const deletePost = (postId) => {
-      const result = confirm("Apakah anda yakin?");
-      if (result) {
-        Inertia.delete(route("posts.destroy", postId), {
-          preserveScroll: true,
-        });
-      }
-    };
+    // const deleteincoming = (incomingId) => {
+    //   const result = confirm("Apakah anda yakin?");
+    //   if (result) {
+    //     Inertia.delete(route("incomings.destroy", incomingId), {
+    //       preserveScroll: true,
+    //     });
+    //   }
+    // };
 
-    return { form, deletePost };
+    return { form };
   },
 };
 </script>

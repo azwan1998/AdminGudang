@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IncomingController;
-use App\Http\Controllers\PostController;
+use App\Http\Controllers\StockController;
 use App\Http\Controllers\PostShowController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -35,4 +35,5 @@ Route::middleware([
     Route::resource('users', UserController::class);
     Route::resource('posts', PostController::class)->except('show');
     Route::resource('incomings', IncomingController::class);
+    Route::resource('stocks', StockController::class);
 });
