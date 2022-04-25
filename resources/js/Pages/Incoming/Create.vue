@@ -30,13 +30,12 @@
             <!-- Kategori -->
             <div class="col-span-6 sm:col-span-4">
               <jet-label for="kategori" value="Kategori" />
-              <jet-input
-                id="kategori"
-                type="text"
-                class="mt-1 block w-full"
-                v-model="form.kategori"
-                autocomplete="kategori"
-              />
+               <select class="form-select form-select-lg mt-1 block w-full" aria-label=".form-select-lg example" v-model="form.kategori">
+                <option selected >Pilih Kategori</option>
+                <option value="Laptop" id="Laptop" >Laptop</option>
+                <option value="Mouse" id="Mouse">Mouse</option>
+                <option value="Tikus" id="Tikus">Tikus</option>
+              </select>
               <jet-input-error :message="form.errors.kategori" class="mt-2" />
             </div>
 
@@ -96,6 +95,7 @@ import JetLabel from "@/Jetstream/Label";
 import JetActionMessage from "@/Jetstream/ActionMessage";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton";
 import JetSelect from "@/Components/Select";
+
 
 export default {
   components: {

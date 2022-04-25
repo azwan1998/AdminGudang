@@ -3,9 +3,6 @@
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Stock Index
-                <!-- <JetNavLink class="float-right" :href="route('incomings.create')" v-if="$page.props.permission.incomings.create">
-                <JetButton >Create</JetButton>
-                </JetNavLink> -->
             </h2>
         </template>
 

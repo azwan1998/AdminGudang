@@ -3,7 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IncomingController;
 use App\Http\Controllers\StockController;
-use App\Http\Controllers\PostShowController;
+use App\Http\Controllers\OutController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -21,7 +21,7 @@ use Inertia\Inertia;
 
 Route::get('/', HomeController::class);
 
-Route::get('/posts/{post}', PostShowController::class)->name('posts.show');
+// Route::get('/posts/{post}', PostShowController::class)->name('posts.show');
 
 Route::middleware([
     'auth:sanctum',
@@ -36,4 +36,5 @@ Route::middleware([
     Route::resource('posts', PostController::class)->except('show');
     Route::resource('incomings', IncomingController::class);
     Route::resource('stocks', StockController::class);
+    Route::resource('outs', OutController::class);
 });

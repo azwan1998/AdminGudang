@@ -2,9 +2,9 @@
     <AppLayout title="Dashboard">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Barang Masuk Index
-                <JetNavLink class="float-right" :href="route('incomings.create')" v-if="$page.props.permission.incomings.create">
-                <JetButton >Input Barang Masuk</JetButton>
+                Barang Keluar Index
+                <JetNavLink class="float-right" :href="route('outs.create')" v-if="$page.props.permission.outs.create">
+                <JetButton >Input Barang Keluar</JetButton>
                 </JetNavLink>
             </h2>
         </template>
@@ -15,7 +15,7 @@
           type="text"
           class="block ml-2 mb-4 w-60"
           v-model="form.search"
-          placeholder="Cari incoming..."
+          placeholder="Cari barang..."
         />
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
           <div class="flex flex-col">
@@ -77,73 +77,73 @@
                       </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                      <tr v-if="!incomings.data.length">
+                      <tr v-if="!outs.data.length">
                         <td class="p-4 text-center text-gray-900" colspan="5">
                           No data
                         </td>
                       </tr>
-                      <tr v-for="incoming in incomings.data" :key="incoming.id">
+                      <tr v-for="out in outs.data" :key="out.id">
                         <td
                           class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
                         >
-                          {{ incoming.id }}
+                          {{ out.id }}
                         </td>
                         <td
                           class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
                         >
-                          {{ incoming.nama_barang }}
+                          {{ out.nama_barang }}
                         </td>
                         <td
                           class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
                         >
-                          {{ incoming.kategori }}
+                          {{ out.kategori }}
                         </td>
                         <td
                           class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
                         >
-                          {{ incoming.merk }}
+                          {{ out.merk }}
                         </td>
                         <td
                           class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
                         >
-                          {{ incoming.jumlah }}
+                          {{ out.jumlah }}
                         </td>
                         <td
                           class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
                         >
-                          {{ incoming.created_at }}
+                          {{ out.created_at }}
                         </td>
                         <td
                           class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
                         >
-                          {{ incoming.updated_at }}
+                          {{ out.updated_at }}
                         </td>
                         <td
                           class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"
                         >
                           <JetNavLink
-                            :href="route('incomings.show', incoming.id)"
+                            :href="route('outs.show', out.id)"
                             class="text-indigo-600 hover:text-indigo-900"
-                            v-if="incoming.can.view"
+                            v-if="out.can.view"
                             >Show
                             </JetNavLink>
                           <JetNavLink
-                            :href="route('incomings.edit', incoming.id)"
+                            :href="route('outs.edit', out.id)"
                             class="ml-2 text-indigo-600 hover:text-indigo-900"
-                            v-if="incoming.can.update"
+                            v-if="out.can.update"
                             >Edit
                             </JetNavLink>
                           <button
-                            @click="deleteincoming(incoming.id)"
+                            @click="deleteout(out.id)"
                             class="ml-2 text-red-600 hover:text-red-900"
-                            v-if="incoming.can.delete">
+                            v-if="out.can.delete">
                             Delete
                           </button>
                         </td>
                       </tr>
                     </tbody>
                   </table>
-                  <JetPagination class="m-5" :links="incomings.links" />
+                  <JetPagination class="m-5" :links="outs.links" />
                 </div>
               </div>
             </div>
@@ -174,7 +174,7 @@ export default {
   },
 
   props: {
-    incomings: Object,
+    outs: Object,
     filters: Object,
   },
 
@@ -188,20 +188,20 @@ export default {
       const query = pickBy(form);
 
       Inertia.replace(
-        route("incomings.index", Object.keys(query).length ? query : {})
+        route("outs.index", Object.keys(query).length ? query : {})
       );
     });
 
-    const deleteincoming = (incomingId) => {
+    const deleteout = (outId) => {
       const result = confirm("Apakah anda yakin?");
       if (result) {
-        Inertia.delete(route("incomings.destroy", incomingId), {
+        Inertia.delete(route("outs.destroy", outId), {
           preserveScroll: true,
         });
       }
     };
 
-    return { form, deleteincoming };
+    return { form, deleteout };
   },
 };
 </script>

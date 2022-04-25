@@ -60,10 +60,10 @@ const logout = () => {
                                 v-if="$page.props.permission.incomings.viewAny">
                                     Barang Masuk
                                 </JetNavLink>
-                                <!-- <JetNavLink :href="route('exits.index')" :active="route().current('exits.*')"
-                                v-if="$page.props.permission.exits.viewAny">
+                                <JetNavLink :href="route('outs.index')" :active="route().current('outs.*')"
+                                v-if="$page.props.permission.outs.viewAny">
                                     Barang Keluar
-                                </JetNavLink> -->
+                                </JetNavLink>
                             </div>
                         </div>
 

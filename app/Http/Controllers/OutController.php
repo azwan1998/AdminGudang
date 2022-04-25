@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Incoming;
+use App\Models\Out;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class IncomingController extends Controller
+class OutController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(Incoming::class);
+        $this->authorizeResource(Out::class);
     }
 
     /**
@@ -23,8 +23,8 @@ class IncomingController extends Controller
         // dd($request);
         $queries = ['search', 'page'];
 
-        return Inertia::render('Incoming/Index', [
-            'incomings' => Incoming::filter($request->only($queries))->paginate(4)->withQueryString(),
+        return Inertia::render('Out/Index', [
+            'Outs' => Out::filter($request->only($queries))->paginate(4)->withQueryString(),
             'filters' => $request->all($queries),
         ]);
     }
@@ -36,7 +36,7 @@ class IncomingController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Incoming/Create');
+        return Inertia::render('Out/Create');
     }
 
     /**
@@ -47,7 +47,7 @@ class IncomingController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        // dd($request);
         $request->validate([
             'nama_barang' => 'required|string',
             'kategori' => 'required|string',
@@ -55,43 +55,43 @@ class IncomingController extends Controller
             'jumlah' => 'required|string',
         ]);
 
-        // Incoming::create($request->only('nama_barang', 'kategori', 'merk', 'jumlah'));
-        $request->user()->incomings()->create($request->only('nama_barang', 'kategori', 'merk', 'jumlah'));
+        // Out::create($request->only('nama_barang', 'kategori', 'merk', 'jumlah'));
+        $request->user()->ComeOuts()->create($request->only('nama_barang', 'kategori', 'merk', 'jumlah'));
 
-        return redirect()->route('incomings.index')->with('success', 'Barang berhasil ditambahkan');
+        return redirect()->route('Outs.index')->with('success', 'Barang berhasil ditambahkan');
 
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Incoming  $incoming
+     * @param  \App\Models\Out  $Out
      * @return \Illuminate\Http\Response
      */
-    public function show(Incoming $incoming)
+    public function show(Out $out)
     {
-        return Inertia::render('Incoming/Show', compact('incoming'));
+        return Inertia::render('Out/Show', compact('out'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Incoming  $incoming
+     * @param  \App\Models\Out  $Out
      * @return \Illuminate\Http\Response
      */
-    public function edit(Incoming $incoming)
+    public function edit(Out $out)
     {
-        return Inertia::render('Incoming/Edit', compact('incoming'));
+        return Inertia::render('Out/Edit', compact('out'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Incoming  $incoming
+     * @param  \App\Models\Out  $Out
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Incoming $incoming)
+    public function update(Request $request, Out $out)
     {
         $request->validate([
             'nama_barang' => 'required|string',
@@ -100,7 +100,7 @@ class IncomingController extends Controller
             'jumlah' => 'required|integer',
         ]);
 
-        $incoming->update($request->only('nama_barang', 'kategori', 'merk', 'jumlah'));
+        $Out->update($request->only('nama_barang', 'kategori', 'merk', 'jumlah'));
 
         return back()->with('success', 'Barang berhasil diubah');
     }
@@ -108,12 +108,12 @@ class IncomingController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Incoming  $incoming
+     * @param  \App\Models\Out  $Out
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Incoming $incoming)
+    public function destroy(Out $out)
     {
-        $incoming->delete();
+        $Out->delete();
 
         return back();
     }
