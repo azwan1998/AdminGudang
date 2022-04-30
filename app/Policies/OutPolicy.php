@@ -5,8 +5,9 @@ namespace App\Policies;
 use App\Models\Out;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Inertia\Inertia;
 
-class OutsPolicy
+class OutPolicy
 {
     use HandlesAuthorization;
 

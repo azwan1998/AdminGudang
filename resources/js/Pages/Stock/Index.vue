@@ -2,7 +2,10 @@
     <AppLayout title="Dashboard">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Stock Index
+                Data Barang Index
+                <!-- <JetNavLink class="float-right" :href="route('s.create')" v-if="$page.props.permission.stocks.create">
+                <JetButton >Input Barang Keluar</JetButton>
+                </JetNavLink> -->
             </h2>
         </template>
 
@@ -12,7 +15,7 @@
           type="text"
           class="block ml-2 mb-4 w-60"
           v-model="form.search"
-          placeholder="Cari barang.."
+          placeholder="Cari Barang Keluar..."
         />
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
           <div class="flex flex-col">
@@ -55,7 +58,7 @@
                           class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
                           Jumlah
-                        </th>
+                        </th>  
                         <th
                           scope="col"
                           class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -118,22 +121,22 @@
                         <td
                           class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"
                         >
-                          <JetNavLink
-                            :href="route('stocks.show', stock.id)"
+                          <!-- <JetNavLink
+                            :href="route('outs.show', out.id)"
                             class="text-indigo-600 hover:text-indigo-900"
-                            v-if="stocks.can.view"
+                            v-if="out.can.view"
                             >Show
                             </JetNavLink>
-                          <!-- <JetNavLink
-                            :href="route('incomings.edit', incoming.id)"
+                          <JetNavLink
+                            :href="route('outs.edit', out.id)"
                             class="ml-2 text-indigo-600 hover:text-indigo-900"
-                            v-if="incoming.can.update"
+                            v-if="out.can.update"
                             >Edit
                             </JetNavLink>
                           <button
-                            @click="deleteincoming(incoming.id)"
+                            @click="deleteout(out.id)"
                             class="ml-2 text-red-600 hover:text-red-900"
-                            v-if="incoming.can.delete">
+                            v-if="out.can.delete">
                             Delete
                           </button> -->
                         </td>
@@ -189,10 +192,10 @@ export default {
       );
     });
 
-    // const deleteincoming = (incomingId) => {
+    // const deleteout = (outId) => {
     //   const result = confirm("Apakah anda yakin?");
     //   if (result) {
-    //     Inertia.delete(route("incomings.destroy", incomingId), {
+    //     Inertia.delete(route("outs.destroy", outId), {
     //       preserveScroll: true,
     //     });
     //   }

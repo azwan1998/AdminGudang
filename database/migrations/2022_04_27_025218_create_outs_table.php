@@ -19,8 +19,8 @@ class CreateOutsTable extends Migration
             $table->string('kategori');
             $table->string('merk');
             $table->integer('jumlah');
-            $table->foreignId('stocks_id');
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('stock_id')->constrained('stocks');
             $table->timestamps();
         });
     }

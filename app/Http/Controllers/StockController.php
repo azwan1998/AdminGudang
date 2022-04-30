@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Stock;
+use App\Models\Incoming;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class StockController extends Controller
@@ -21,8 +23,9 @@ class StockController extends Controller
     public function index(Request $request)
     {
         // dd($request);
+        // $incoming = Incoming::with(['nama_barang', 'kategori' ,'merk','jumlah'])->where('id', $request)->get();
+        // dd($incoming);
         $queries = ['search', 'page'];
-
         return Inertia::render('Stock/Index', [
             'stocks' => Stock::filter($request->only($queries))->paginate(2)->withQueryString(),
             'filters' => $request->all($queries),

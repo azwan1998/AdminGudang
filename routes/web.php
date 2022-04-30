@@ -21,8 +21,6 @@ use Inertia\Inertia;
 
 Route::get('/', HomeController::class);
 
-// Route::get('/posts/{post}', PostShowController::class)->name('posts.show');
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -33,7 +31,6 @@ Route::middleware([
     })->name('dashboard');
 
     Route::resource('users', UserController::class);
-    Route::resource('posts', PostController::class)->except('show');
     Route::resource('incomings', IncomingController::class);
     Route::resource('stocks', StockController::class);
     Route::resource('outs', OutController::class);

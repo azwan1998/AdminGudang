@@ -57,7 +57,7 @@
               <jet-label for="jumlah" value="Jumlah" />
               <jet-input
                 id="jumlah"
-                type="Integer"
+                type="Number"
                 class="mt-1 block w-full"
                 v-model="form.jumlah"
                 autocomplete="jumlah"

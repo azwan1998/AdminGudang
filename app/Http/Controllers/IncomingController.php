@@ -47,7 +47,7 @@ class IncomingController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        // dd($request);
         $request->validate([
             'nama_barang' => 'required|string',
             'kategori' => 'required|string',

@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Out;
+// use App\Models\Out;
 use App\Models\Stock;
 use Illuminate\Http\Request;
 use Inertia\Middleware;

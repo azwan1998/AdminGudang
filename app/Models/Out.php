@@ -18,11 +18,8 @@ class Out extends Model
         'jumlah',
     ];
 
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
+    protected $guards = [];
+
     protected $appends = [
         'can',
     ];
@@ -42,7 +39,9 @@ class Out extends Model
         $query->when($filters['search'] ?? null, function ($query, $search) {
             $query->where(function ($query) use ($search) {
                 $query->where('nama_barang', 'like', '%' . $search . '%')
-                    ->orWhere('kategori', 'like', '%' . $search . '%');
+                    ->orWhere('kategori', 'like', '%' . $search . '%')
+                    ->orWhere('merk', 'like', '%' . $search . '%')
+                    ->orWhere('jumlah', 'like', '%' . $search . '%');
             });
         });
     }
