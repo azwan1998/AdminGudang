@@ -14,25 +14,22 @@
           <template #description>Input Barang Keluar. </template>
 
           <template #form>
-
+            <!-- @foreach ($stock as $st) -->
             <!-- Nama Barang -->
             <div class="col-span-6 sm:col-span-4">
               <jet-label for="kategori" value="Kategori" />
                <select class="form-select form-select-lg mt-1 block w-full" aria-label=".form-select-lg example" v-model="form.kategori">
                 <option selected >Pilih Kategori</option>
-                <option v-bind="(kategori) in stock" :value=kategori>  
-                        {{kategori}}
-                </option>
+                <!-- <option value="Laptop" >{{ $st->kategori }}</option> -->
               </select>
               <jet-input-error :message="form.errors.kategori" class="mt-2" />
             </div>
-
+            <!-- @endforeach -->
             <!-- Kategori -->
-            <div class="col-span-6 sm:col-span-4">
+            <div class="col-span-6 sm:col-span-4" >
               <jet-label for="kategori" value="Kategori" />
-               <select class="form-select form-select-lg mt-1 block w-full" aria-label=".form-select-lg example" v-model="form.kategori">
-                <option selected >Pilih Kategori</option>
-                <option value="Laptop" id="Laptop" >Laptop</option>
+               <select class="form-select form-select-lg mt-1 block w-full" aria-label=".form-select-lg example" v-model="form.kategori" v-for="stock in stocks.data" :key="stock.id" >
+                <option value="" id="Laptop" > {{  stock.kategori }} </option>
                 <option value="Mouse" id="Mouse">Mouse</option>
                 <option value="Tikus" id="Tikus">Tikus</option>
               </select>
@@ -108,13 +105,17 @@ export default {
     JetLabel,
     JetSecondaryButton,
     JetSelect,
-    props:['stock'],
+  },
+
+  props: {
+    outs: Object,
+    stocks:Array,
   },
 
   setup() {
     const form = useForm({
       _method: "POST",
-      nama_barang: "",
+      kategori: "",
       kategori: "",
       merk: "",
       jumlah: "",

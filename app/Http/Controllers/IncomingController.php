@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Incoming;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Stock;
 
 class IncomingController extends Controller
 {
@@ -36,7 +37,10 @@ class IncomingController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Incoming/Create');
+        $stocks = Stock::latest()->get();
+        return Inertia::render('Incoming/Create', [
+            'stocks' => $stocks
+         ]);
     }
 
     /**
@@ -49,14 +53,13 @@ class IncomingController extends Controller
     {
         // dd($request);
         $request->validate([
-            'nama_barang' => 'required|string',
+            'stock_id' => 'required|integer',
             'kategori' => 'required|string',
-            'merk' => 'required|string',
             'jumlah' => 'required|string',
         ]);
 
         // Incoming::create($request->only('nama_barang', 'kategori', 'merk', 'jumlah'));
-        $request->user()->incomings()->create($request->only('nama_barang', 'kategori', 'merk', 'jumlah'));
+        $request->user()->incomings()->create($request->only('stock_id', 'kategori', 'jumlah'));
 
         return redirect()->route('incomings.index')->with('success', 'Barang berhasil ditambahkan');
 

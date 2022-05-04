@@ -37,8 +37,8 @@ class OutController extends Controller
      */
     public function create()
     {
-        $stock = Stock::all();
-        return Inertia::render('Out/Create', compact('stock'));
+        $stocks = Stock::Latest()->get();
+        return Inertia::render('Out/Create', ['stocks' => $stocks]);
     }
 
     /**

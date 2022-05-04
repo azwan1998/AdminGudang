@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Models\Stock;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class IncomingPolicy
+class StockPolicy
 {
     use HandlesAuthorization;
 

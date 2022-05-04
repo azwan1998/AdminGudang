@@ -12,9 +12,8 @@ class Incoming extends Model
     use HasCan;
 
     protected $fillable = [
-        'nama_barang',
+        'stock_id',
         'kategori',
-        'merk',
         'jumlah',
     ];
 
@@ -45,5 +44,13 @@ class Incoming extends Model
                     ->orWhere('kategori', 'like', '%' . $search . '%');
             });
         });
+    }
+    public function users()
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function stocks()
+    {
+        return $this->belongsTo(Stock::class);
     }
 }

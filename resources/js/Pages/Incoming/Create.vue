@@ -8,23 +8,21 @@
 
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+
         <jet-form-section @submitted="createincoming">
           <template #title> Barang Masuk  </template>
 
           <template #description>Input Barang Masuk. </template>
 
           <template #form>
-            <!-- Nama Barang -->
+            <!-- Kategori -->
             <div class="col-span-6 sm:col-span-4">
-              <jet-label for="nama_barang" value="Nama_Barang" />
-              <jet-input
-                id="nama_barang"
-                type="text"
-                class="mt-1 block w-full"
-                v-model="form.nama_barang"
-                autocomplete="nama_barang"
-              />
-              <jet-input-error :message="form.errors.nama_barang" class="mt-2" />
+              <jet-label for="stock_id" value="Pilih Barang" />
+               <select class="form-select form-select-lg mt-1 block w-full" aria-label=".form-select-lg example" v-model="form.stock_id" v-for="stock in stocks" :key="stock.id" >
+                <option selected >Pilih barang</option>
+                <option v-bind:value="stock.id" > {{  stock.nama_barang  }}</option>
+              </select>
+              <jet-input-error :message="form.errors.stock_id" class="mt-2" />
             </div>
 
             <!-- Kategori -->
@@ -37,19 +35,6 @@
                 <option value="Tikus" id="Tikus">Tikus</option>
               </select>
               <jet-input-error :message="form.errors.kategori" class="mt-2" />
-            </div>
-
-            <!-- Merk -->
-            <div class="col-span-6 sm:col-span-4">
-              <jet-label for="merk" value="Merk" />
-              <jet-input
-                id="merk"
-                type="text"
-                class="mt-1 block w-full"
-                v-model="form.merk"
-                autocomplete="merk"
-              />
-              <jet-input-error :message="form.errors.merk" class="mt-2" />
             </div>
 
             <!-- Jumlah -->
@@ -110,12 +95,15 @@ export default {
     JetSelect,
   },
 
+  props :{
+    stocks:Array,
+  },
+
   setup() {
     const form = useForm({
       _method: "POST",
-      nama_barang: "",
+      stock_id: "",
       kategori: "",
-      merk: "",
       jumlah: "",
     });
 

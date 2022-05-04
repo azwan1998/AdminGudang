@@ -19,8 +19,6 @@ class CreateStocksTable extends Migration
             $table->string('kategori');
             $table->string('merk');
             $table->integer('jumlah');
-            $table->foreignId('incomings_id');
-            $table->foreignId('outs_id');
             $table->timestamps();
         });
     }

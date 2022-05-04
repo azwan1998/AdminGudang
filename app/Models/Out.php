@@ -45,4 +45,12 @@ class Out extends Model
             });
         });
     }
+    public function stocks()
+    {
+        return $this->belongsTo(Stock::class);
+    }
+    public function users()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

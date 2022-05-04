@@ -47,4 +47,12 @@ class Stock extends Model
             });
         });
     }
+    public function incomings()
+    {
+        return $this->hasMany(Incoming::class);
+    }
+    public function outs()
+    {
+        return $this->hasMany(Out::class);
+    }
 }

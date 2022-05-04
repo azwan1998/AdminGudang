@@ -15,11 +15,10 @@ class CreateIncomingsTable extends Migration
     {
         Schema::create('incomings', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_barang');
             $table->string('kategori');
-            $table->string('merk');
             $table->integer('jumlah');
             $table->foreignId('user_id');
+            $table->foreignId('stock_id');
             $table->timestamps();
         });
     }

@@ -20,7 +20,7 @@ class CreateOutsTable extends Migration
             $table->string('merk');
             $table->integer('jumlah');
             $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('stock_id')->constrained('stocks');
+            $table->foreignId('stock_id');
             $table->timestamps();
         });
     }
