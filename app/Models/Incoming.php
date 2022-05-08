@@ -45,11 +45,11 @@ class Incoming extends Model
             });
         });
     }
-    public function stocks()
+    public function stock()
     {
-        return $this->belongsToMany(Stock::class);
+        return $this->belongsTo(Stock::class);
     }
-    public function kategoris()
+    public function kategori()
     {
         return $this->belongsTo(Kategori::class);
     }

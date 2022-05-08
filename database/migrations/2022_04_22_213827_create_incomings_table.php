@@ -18,6 +18,7 @@ class CreateIncomingsTable extends Migration
             $table->foreignId('kategori_id');
             $table->integer('jumlah');
             $table->foreignId('stock_id');
+            $table->foreignId('user_id');
             $table->timestamps();
         });
     }

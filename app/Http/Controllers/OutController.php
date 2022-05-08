@@ -23,10 +23,11 @@ class OutController extends Controller
      */
     public function index(Request $request)
     {
+        
         $queries = ['search', 'page'];
 
         return Inertia::render('Out/Index', [
-            'outs' => Out::filter($request->only($queries))->paginate(4)->withQueryString(),
+            'outs' => Out::with('kategori','stock')->filter($request->only($queries))->paginate(4)->withQueryString(),
             'filters' => $request->all($queries),
         ]);
     }
@@ -58,7 +59,10 @@ class OutController extends Controller
         ]);
 
         // Incoming::create($request->only('nama_barang', 'kategori', 'merk', 'jumlah'));
-        $request->user()->outs()->create($request->only('stock_id', 'kategori_id', 'jumlah'));
+        // $request->user()->outs()->create($request->only('stock_id', 'kategori_id', 'jumlah'));
+
+        $out = $request->user()->outs()->create($request->only('stock_id', 'kategori_id', 'jumlah'));
+        $out->stock()->update(['jumlah' => $out->stock->jumlah - $request->jumlah]);
 
         return redirect()->route('outs.index')->with('success', 'Barang berhasil ditambahkan');
 

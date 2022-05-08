@@ -36,8 +36,7 @@ class StockController extends Controller
         // $stocks->setAttribut('stocks',$stock);
         $queries = ['search', 'page'];
         return Inertia::render('Stock/Index', [
-            // 'stocks' => $stocks
-            'stocks' => Stock::with('kategoris')->filter($request->only($queries))->paginate(2)->withQueryString(),
+            'stocks' => Stock::with('kategori')->filter($request->only($queries))->paginate(2)->withQueryString(),
             'filters' => $request->all($queries),
             // 'kategoris' => $kategoris,
         ]);

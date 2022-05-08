@@ -7,6 +7,7 @@ use App\Http\Controllers\OutController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KategoriController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
 use Inertia\Inertia;
 
 /*
@@ -20,7 +21,16 @@ use Inertia\Inertia;
 |
  */
 
-Route::get('/', HomeController::class);
+// Route::get('/', HomeController::class);
+
+Route::get('/', function () {
+    return Inertia::render('Auth/Login', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
+});
 
 Route::middleware([
     'auth:sanctum',

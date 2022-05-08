@@ -92,12 +92,12 @@
                         <td
                           class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
                         >
-                          {{ out.nama_barang }}
+                          {{ out.stock.nama_barang }}
                         </td>
                         <td
                           class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
                         >
-                          {{ out.kategori }}
+                          {{ out.kategori.kategori }}
                         </td>
                        
                         <td

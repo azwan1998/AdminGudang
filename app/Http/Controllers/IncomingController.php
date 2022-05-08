@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Stock;
 use App\Models\Kategori;
+use Illuminate\Support\Facades\DB;
 
 class IncomingController extends Controller
 {
@@ -25,13 +26,13 @@ class IncomingController extends Controller
         // dd($request);
         $queries = ['search', 'page'];
 
-        $stocks = Stock::latest()->get();
-        $kategoris = Kategori::latest()->get();
+        // $stocks = Stock::latest()->get();
+        // $kategoris = Kategori::latest()->get();
         return Inertia::render('Incoming/Index', [
-            'incomings' => Incoming::filter($request->only($queries))->paginate(4)->withQueryString(),
+            'incomings' => Incoming::with('kategori', 'stock')->filter($request->only($queries))->paginate(4)->withQueryString(),
             'filters' => $request->all($queries),
-            'stocks' => $stocks,
-            'kategoris' => $kategoris,
+            // 'stocks' => $stocks,
+            // 'kategoris' => $kategoris,
         ]);
     }
 
@@ -44,6 +45,9 @@ class IncomingController extends Controller
     {
         $stocks = Stock::latest()->get();
         $kategoris = Kategori::latest()->get();
+        
+        
+
         return Inertia::render('Incoming/Create', compact('stocks','kategoris'));
     }
 
@@ -55,16 +59,16 @@ class IncomingController extends Controller
      */
     public function store(Request $request)
     {
+        
         // dd($request);
         $request->validate([
             'stock_id' => 'required|integer',
             'kategori_id' => 'required|integer',
             'jumlah' => 'required|string',
         ]);
-
-        // Incoming::create($request->only('nama_barang', 'kategori', 'merk', 'jumlah'));
-        $request->user()->incomings()->create($request->only('stock_id', 'kategori_id', 'jumlah'));
-
+        // $request->user()->incomings()->create($request->only('stock_id', 'kategori_id', 'jumlah'));
+        $incoming = $request->user()->incomings()->create($request->only('stock_id', 'kategori_id', 'jumlah'));
+        $incoming->stock()->update(['jumlah' => $incoming->stock->jumlah + $request->jumlah]);
         return redirect()->route('incomings.index')->with('success', 'Barang berhasil ditambahkan');
 
     }

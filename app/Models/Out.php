@@ -37,16 +37,16 @@ class Out extends Model
     {
         $query->when($filters['search'] ?? null, function ($query, $search) {
             $query->where(function ($query) use ($search) {
-                $query->where('nama_barang', 'like', '%' . $search . '%')
-                    ->orWhere('kategori', 'like', '%' . $search . '%')
-                    ->orWhere('merk', 'like', '%' . $search . '%')
-                    ->orWhere('jumlah', 'like', '%' . $search . '%');
+                $query->where('nama_barang', 'like', '%' . $search . '%');
+                    // ->orWhere('kategori', 'like', '%' . $search . '%')
+                    // ->orWhere('merk', 'like', '%' . $search . '%')
+                    // ->orWhere('jumlah', 'like', '%' . $search . '%');
             });
         });
     }
-    public function stocks()
+    public function stock()
     {
-        return $this->belongsToMany(Stock::class);
+        return $this->belongsTo(Stock::class);
     }
     public function kategori()
     {

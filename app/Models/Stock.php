@@ -42,20 +42,20 @@ class Stock extends Model
     {
         $query->when($filters['search'] ?? null, function ($query, $search) {
             $query->where(function ($query) use ($search) {
-                $query->where('nama_barang', 'like', '%' . $search . '%')
-                    ->orWhere('kategori', 'like', '%' . $search . '%');
+                $query->where('nama_barang', 'like', '%' . $search . '%');
+                    // ->orWhere('kategori', 'like', '%' . $search . '%');
             });
         });
     }
-    public function incomings()
+    public function incoming()
     {
-        return $this->belongsToMany(Incoming::class);
+        return $this->hasMany(Incoming::class);
     }
-    public function outs()
+    public function out()
     {
-        return $this->belongsToMany(Out::class);
+        return $this->hasMany(Out::class);
     }
-    public function kategoris()
+    public function kategori()
     {
         return $this->belongsTo(Kategori::class);
     }
