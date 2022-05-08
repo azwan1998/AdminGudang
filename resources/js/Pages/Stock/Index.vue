@@ -1,11 +1,11 @@
 <template>
-    <AppLayout title="Dashboard">
+    <AppLayout title="Data Barang">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Data Barang Index
-                <!-- <JetNavLink class="float-right" :href="route('s.create')" v-if="$page.props.permission.stocks.create">
-                <JetButton >Input Barang Keluar</JetButton>
-                </JetNavLink> -->
+                <JetNavLink class="float-right" :href="route('stocks.create')" v-if="$page.props.permission.stocks.create">
+                <JetButton >Input Data Barang</JetButton>
+                </JetNavLink>
             </h2>
         </template>
 
@@ -15,7 +15,7 @@
           type="text"
           class="block ml-2 mb-4 w-60"
           v-model="form.search"
-          placeholder="Cari Barang Keluar..."
+          placeholder="Cari Barang ..."
         />
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
           <div class="flex flex-col">
@@ -71,18 +71,25 @@
                         >
                           Created At
                         </th>
+                        <th
+                          scope="col"
+                          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          <center>Action</center>
+                        </th>
                         <th scope="col" class="relative px-6 py-3">
                           <span class="sr-only">Edit</span>
                         </th>
                       </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                      <tr v-if="!stocks.data.length">
+                      <!-- <tr v-if="!stocks.data.length">
                         <td class="p-4 text-center text-gray-900" colspan="5">
                           No data
                         </td>
-                      </tr>
-                      <tr v-for="stock in stocks.data" :key="stock.id">
+                      </tr> -->
+                      <!-- <a v-for="kategori in kategoris" :key="kategori.id"> -->
+                      <tr v-for="stock in stocks.data" :key="stock.id" >
                         <td
                           class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
                         >
@@ -121,26 +128,27 @@
                         <td
                           class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"
                         >
-                          <!-- <JetNavLink
-                            :href="route('outs.show', out.id)"
+                          <JetNavLink
+                            :href="route('stocks.show', stock.id)"
                             class="text-indigo-600 hover:text-indigo-900"
-                            v-if="out.can.view"
+                            v-if="stock.can.view"
                             >Show
                             </JetNavLink>
                           <JetNavLink
-                            :href="route('outs.edit', out.id)"
+                            :href="route('stocks.edit', stock.id)"
                             class="ml-2 text-indigo-600 hover:text-indigo-900"
-                            v-if="out.can.update"
+                            v-if="stock.can.update"
                             >Edit
                             </JetNavLink>
                           <button
-                            @click="deleteout(out.id)"
+                            @click="deletestock(stock.id)"
                             class="ml-2 text-red-600 hover:text-red-900"
-                            v-if="out.can.delete">
+                            v-if="stock.can.delete">
                             Delete
-                          </button> -->
+                          </button>
                         </td>
                       </tr>
+                      <!-- </a> -->
                     </tbody>
                   </table>
                   <JetPagination class="m-5" :links="stocks.links" />
@@ -175,6 +183,7 @@ export default {
 
   props: {
     stocks: Object,
+    kategoris: Array,
     filters: Object,
   },
 
@@ -192,16 +201,16 @@ export default {
       );
     });
 
-    // const deleteout = (outId) => {
-    //   const result = confirm("Apakah anda yakin?");
-    //   if (result) {
-    //     Inertia.delete(route("outs.destroy", outId), {
-    //       preserveScroll: true,
-    //     });
-    //   }
-    // };
+    const deletestock = (stockId) => {
+      const result = confirm("Apakah anda yakin?");
+      if (result) {
+        Inertia.delete(route("stocks.destroy", stockId), {
+          preserveScroll: true,
+        });
+      }
+    };
 
-    return { form };
+    return { form, deletestock };
   },
 };
 </script>

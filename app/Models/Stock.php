@@ -14,7 +14,7 @@ class Stock extends Model
 
     protected $fillable = [
         'nama_barang',
-        'kategori',
+        'kategori_id',
         'merk',
         'jumlah',
     ];
@@ -49,10 +49,14 @@ class Stock extends Model
     }
     public function incomings()
     {
-        return $this->hasMany(Incoming::class);
+        return $this->belongsToMany(Incoming::class);
     }
     public function outs()
     {
-        return $this->hasMany(Out::class);
+        return $this->belongsToMany(Out::class);
+    }
+    public function kategoris()
+    {
+        return $this->belongsTo(Kategori::class);
     }
 }

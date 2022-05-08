@@ -3,6 +3,8 @@
 namespace App\Http\Middleware;
 
 // use App\Models\Out;
+
+use App\Models\Kategori;
 use App\Models\Stock;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -61,11 +63,15 @@ class HandleInertiaRequests extends Middleware
                         'viewAny' => $user->can('viewAny', User::class),
                     ],
                     'stocks' => [
-                        // 'create' => $user->can('create', Stock::class),
+                        'create' => $user->can('create', Stock::class),
                         'viewAny' => $user->can('viewAny', User::class),
                     ],
                     'outs' => [
                         'create' => $user->can('create', Out::class),
+                        'viewAny' => $user->can('viewAny', User::class),
+                    ],
+                    'kategoris' => [
+                        'create' => $user->can('create', Kategori::class),
                         'viewAny' => $user->can('viewAny', User::class),
                     ],
                 ];

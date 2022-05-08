@@ -2,52 +2,33 @@
     <AppLayout title="Dashboard">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Post Edit
+                Kategori Edit
             </h2>
         </template>
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <JetFormSection @submitted="updateIncoming">
+                <JetFormSection @submitted="updateKategori">
                 <template #title>
-                  Update Data Barang
+                  Update Kategori.
                 </template>
 
                 <template #description>
-                    Update Data Barang.
+                    Update Kategori.
                 </template>
 
         <template #form>
-
-          <!-- Kategori -->
+            <!-- Kategori -->
             <div class="col-span-6 sm:col-span-4">
-              <jet-label for="kategori_id" value="Kategori" />
-               <select class="form-select form-select-lg mt-1 block w-full" aria-label=".form-select-lg example" v-model="form.kategori_id">
-                <option v-for="kategori in kategoris" :key="kategori.id" v-bind:value="kategori.id" > {{  kategori.kategori  }}</option>
-              </select>
-              <jet-input-error :message="form.errors.kategori" class="mt-2" />
-            </div>
-
-            <!-- Nama Barang -->
-            <div class="col-span-6 sm:col-span-4">
-              <jet-label for="stock_id" value="Pilih Barang" />
-               <select class="form-select form-select-lg mt-1 block w-full" aria-label=".form-select-lg example" v-model="form.stock_id"  >
-                <option v-for="stock in stocks" :key="stock.id" v-bind:value="stock.id" > {{  stock.nama_barang  }}</option>
-              </select>
-              <jet-input-error :message="form.errors.stock_id" class="mt-2" />
-            </div>
-
-            <!-- jumlah -->
-            <div class="col-span-6 sm:col-span-4">
-              <jet-label for="jumlah" value="Jumlah" />
+              <jet-label for="kategori" value="Kategori" />
               <jet-input
-                id="jumlah"
+                id="kategori"
                 type="text"
                 class="mt-1 block w-full"
-                v-model="form.jumlah"
-                autocomplete="jumlah"
+                v-model="form.kategori"
+                autocomplete="kategori"
               />
-              <jet-input-error :message="form.errors.jumlah" class="mt-2" />
+              <jet-input-error :message="form.errors.kategori" class="mt-2" />
             </div>   
           </template>
 
@@ -93,26 +74,22 @@ export default {
   },
 
    props :{
-    incoming:Array,
-    stocks:Array,
-    kategoris:Array,
+    kategori:Array,
   },
 
   setup(props) {
     const form = useForm({
       _method: 'PUT',
-      stock_id: props.incoming.stock_id,
-      kategori_id: props.incoming.kategori_id,
-      jumlah: props.incoming.jumlah,
+      kategori: props.kategori.kategori,
     });
 
-     const updateIncoming = () => {
-      form.post(route("incomings.update", props.incoming.id), {
+     const updateKategori = () => {
+      form.post(route("kategoris.update", props.kategori.id), {
         preserveScroll: true,
       });
     };
 
-    return { form, updateIncoming };
+    return { form, updateKategori };
   },
 };
 </script>

@@ -16,9 +16,10 @@ class CreateStocksTable extends Migration
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
             $table->string('nama_barang');
-            $table->string('kategori');
+            $table->foreignId('kategori_id');
             $table->string('merk');
             $table->integer('jumlah');
+            $table->foreignId('user_id');
             $table->timestamps();
         });
     }

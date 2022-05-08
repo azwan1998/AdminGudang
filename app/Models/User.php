@@ -91,4 +91,19 @@ class User extends Authenticatable
     {
         return $this->hasMany(Incoming::class);
     }
+
+    public function stocks()
+    {
+        return $this->hasMany(Stock::class);
+    }
+
+    public function kategoris()
+    {
+        return $this->hasMany(Kategori::class);
+    }
+
+    public function outs()
+    {
+        return $this->hasMany(Out::class);
+    }
 }

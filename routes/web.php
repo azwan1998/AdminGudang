@@ -5,6 +5,7 @@ use App\Http\Controllers\IncomingController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\OutController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\KategoriController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -34,4 +35,5 @@ Route::middleware([
     Route::resource('incomings', IncomingController::class);
     Route::resource('stocks', StockController::class);
     Route::resource('outs', OutController::class);
+    Route::resource('kategoris', KategoriController::class);
 });

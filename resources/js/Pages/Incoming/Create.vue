@@ -17,24 +17,21 @@
           <template #form>
             <!-- Kategori -->
             <div class="col-span-6 sm:col-span-4">
-              <jet-label for="stock_id" value="Pilih Barang" />
-               <select class="form-select form-select-lg mt-1 block w-full" aria-label=".form-select-lg example" v-model="form.stock_id" v-for="stock in stocks" :key="stock.id" >
-                <option selected >Pilih barang</option>
-                <option v-bind:value="stock.id" > {{  stock.nama_barang  }}</option>
-              </select>
-              <jet-input-error :message="form.errors.stock_id" class="mt-2" />
-            </div>
-
-            <!-- Kategori -->
-            <div class="col-span-6 sm:col-span-4">
-              <jet-label for="kategori" value="Kategori" />
-               <select class="form-select form-select-lg mt-1 block w-full" aria-label=".form-select-lg example" v-model="form.kategori">
-                <option selected >Pilih Kategori</option>
-                <option value="Laptop" id="Laptop" >Laptop</option>
-                <option value="Mouse" id="Mouse">Mouse</option>
-                <option value="Tikus" id="Tikus">Tikus</option>
+              <jet-label for="kategori_id" value="Kategori" />
+               <select class="form-select form-select-lg mt-1 block w-full" aria-label=".form-select-lg example" v-model="form.kategori_id">
+                <option v-for="kategori in kategoris" :key="kategori.id" v-bind:value="kategori.id" > {{  kategori.kategori  }}</option>
               </select>
               <jet-input-error :message="form.errors.kategori" class="mt-2" />
+            </div>
+
+            <!-- Nama Barang -->
+            <div class="col-span-6 sm:col-span-4">
+              <jet-label for="stock_id" value="Pilih Barang" />
+               <select class="form-select form-select-lg mt-1 block w-full" aria-label=".form-select-lg example" v-model="form.stock_id"  >
+                <option selected >Pilih barang</option>
+                <option v-for="stock in stocks" :key="stock.id" v-bind:value="stock.id" > {{  stock.nama_barang  }}</option>
+              </select>
+              <jet-input-error :message="form.errors.stock_id" class="mt-2" />
             </div>
 
             <!-- Jumlah -->
@@ -97,13 +94,14 @@ export default {
 
   props :{
     stocks:Array,
+    kategoris:Array,
   },
 
   setup() {
     const form = useForm({
       _method: "POST",
       stock_id: "",
-      kategori: "",
+      kategori_id: "",
       jumlah: "",
     });
 

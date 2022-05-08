@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kategori;
 use App\Models\Out;
 use Illuminate\Http\Request;
 use App\Models\Stock;
@@ -38,7 +39,8 @@ class OutController extends Controller
     public function create()
     {
         $stocks = Stock::Latest()->get();
-        return Inertia::render('Out/Create', ['stocks' => $stocks]);
+        $kategoris = Kategori::Latest()->get();
+        return Inertia::render('Out/Create', compact('stocks','kategoris'));
     }
 
     /**
@@ -50,14 +52,13 @@ class OutController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_barang' => 'required|string',
-            'kategori' => 'required|string',
-            'merk' => 'required|string',
+            'stock_id' => 'required|integer',
+            'kategori_id' => 'required|integer',
             'jumlah' => 'required|string',
         ]);
 
         // Incoming::create($request->only('nama_barang', 'kategori', 'merk', 'jumlah'));
-        $request->user()->outs()->create($request->only('nama_barang', 'kategori', 'merk', 'jumlah'));
+        $request->user()->outs()->create($request->only('stock_id', 'kategori_id', 'jumlah'));
 
         return redirect()->route('outs.index')->with('success', 'Barang berhasil ditambahkan');
 
@@ -82,7 +83,9 @@ class OutController extends Controller
      */
     public function edit(Out $out)
     {
-        //
+        $stocks = Stock::latest()->get();
+        $kategoris = Kategori::latest()->get();
+        return Inertia::render('Out/Edit', compact('out', 'stocks', 'kategoris'));
     }
 
     /**
@@ -94,7 +97,15 @@ class OutController extends Controller
      */
     public function update(Request $request, Out $out)
     {
-        //
+        $request->validate([
+            'stock_id' => 'required|integer',
+            'kategori_id' => 'required|integer',
+            'jumlah' => 'required|integer',
+        ]);
+
+        $out->update($request->only('stock_id', 'kategori_id', 'jumlah'));
+
+        return redirect()->route('outs.index')->with('success', 'Barang berhasil diubah');
     }
 
     /**

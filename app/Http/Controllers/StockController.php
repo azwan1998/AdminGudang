@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Stock;
 use App\Models\Incoming;
+use App\Models\Kategori;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
@@ -19,16 +20,26 @@ class StockController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     * 
      */
+    
     public function index(Request $request)
     {
-        // dd($request);
-        // $incoming = Incoming::with(['nama_barang', 'kategori' ,'merk','jumlah'])->where('id', $request)->get();
-        // dd($incoming);
+        // $stocks =Stock::latest()->get();
+        // $kategoris = DB::table('stocks')
+        //             ->leftJoin('kategoris','kategoris.id','=','stocks.kategori_id')
+        //             ->select('kategoris.kategori')
+        //             ->get();
+        // $kategoris = Kategori::with('stocks')->get();
+
+        // dd($kategoris);
+        // $stocks->setAttribut('stocks',$stock);
         $queries = ['search', 'page'];
         return Inertia::render('Stock/Index', [
-            'stocks' => Stock::filter($request->only($queries))->paginate(2)->withQueryString(),
+            // 'stocks' => $stocks
+            'stocks' => Stock::with('kategoris')->filter($request->only($queries))->paginate(2)->withQueryString(),
             'filters' => $request->all($queries),
+            // 'kategoris' => $kategoris,
         ]);
     }
 
@@ -37,10 +48,11 @@ class StockController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    // public function create()
-    // {
-    //     return Inertia::render('Incoming/Create');
-    // }
+    public function create()
+    {
+        $kategoris = Kategori::Latest()->get();
+        return Inertia::render('Stock/Create', compact('kategoris'));
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -48,22 +60,22 @@ class StockController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    // public function store(Request $request)
-    // {
-    //     // dd($request);
-    //     $request->validate([
-    //         'nama_barang' => 'required|string',
-    //         'kategori' => 'required|string',
-    //         'merk' => 'required|string',
-    //         'jumlah' => 'required|string',
-    //     ]);
+    public function store(Request $request)
+    {
+        // dd($request);
+        $request->validate([
+            'nama_barang' => 'required|string',
+            'kategori_id' => 'required|integer',
+            'merk' => 'required|string',
+            'jumlah' => 'required|string',
+        ]);
 
-    //     // Incoming::create($request->only('nama_barang', 'kategori', 'merk', 'jumlah'));
-    //     $request->user()->incomings()->create($request->only('nama_barang', 'kategori', 'merk', 'jumlah'));
+        // Incoming::create($request->only('nama_barang', 'kategori', 'merk', 'jumlah'));
+        $request->user()->stocks()->create($request->only('nama_barang', 'kategori_id', 'merk', 'jumlah'));
 
-    //     return redirect()->route('incomings.index')->with('success', 'Barang berhasil ditambahkan');
+        return redirect()->route('stocks.index')->with('success', 'Barang berhasil ditambahkan');
 
-    // }
+    }
 
     /**
      * Display the specified resource.
@@ -82,10 +94,11 @@ class StockController extends Controller
      * @param  \App\Models\Incoming  $incoming
      * @return \Illuminate\Http\Response
      */
-    // public function edit(Incoming $incoming)
-    // {
-    //     return Inertia::render('Incoming/Edit', compact('incoming'));
-    // }
+    public function edit(Stock $stock)
+    {
+        $kategoris = Kategori::latest()->get();
+        return Inertia::render('Stock/Edit', compact('stock', 'kategoris'));
+    }
 
     /**
      * Update the specified resource in storage.
@@ -94,19 +107,19 @@ class StockController extends Controller
      * @param  \App\Models\Incoming  $incoming
      * @return \Illuminate\Http\Response
      */
-    // public function update(Request $request, Incoming $incoming)
-    // {
-    //     $request->validate([
-    //         'nama_barang' => 'required|string',
-    //         'kategori' => 'required|string',
-    //         'merk' => 'required|string',
-    //         'jumlah' => 'required|integer',
-    //     ]);
+    public function update(Request $request, Stock $stock)
+    {
+        $request->validate([
+            'nama_barang' => 'required|string',
+            'kategori_id' => 'required|integer',
+            'merk' => 'required|string',
+            'jumlah' => 'required|integer',
+        ]);
 
-    //     $incoming->update($request->only('nama_barang', 'kategori', 'merk', 'jumlah'));
+        $stock->update($request->only('nama_barang', 'kategori_id', 'merk', 'jumlah'));
 
-    //     return back()->with('success', 'Barang berhasil diubah');
-    // }
+        return redirect()->route('stocks.index')->with('success', 'Barang berhasil diubah');
+    }
 
     /**
      * Remove the specified resource from storage.

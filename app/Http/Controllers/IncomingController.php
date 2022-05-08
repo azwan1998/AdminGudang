@@ -6,6 +6,7 @@ use App\Models\Incoming;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Stock;
+use App\Models\Kategori;
 
 class IncomingController extends Controller
 {
@@ -24,9 +25,13 @@ class IncomingController extends Controller
         // dd($request);
         $queries = ['search', 'page'];
 
+        $stocks = Stock::latest()->get();
+        $kategoris = Kategori::latest()->get();
         return Inertia::render('Incoming/Index', [
             'incomings' => Incoming::filter($request->only($queries))->paginate(4)->withQueryString(),
             'filters' => $request->all($queries),
+            'stocks' => $stocks,
+            'kategoris' => $kategoris,
         ]);
     }
 
@@ -38,9 +43,8 @@ class IncomingController extends Controller
     public function create()
     {
         $stocks = Stock::latest()->get();
-        return Inertia::render('Incoming/Create', [
-            'stocks' => $stocks
-         ]);
+        $kategoris = Kategori::latest()->get();
+        return Inertia::render('Incoming/Create', compact('stocks','kategoris'));
     }
 
     /**
@@ -54,12 +58,12 @@ class IncomingController extends Controller
         // dd($request);
         $request->validate([
             'stock_id' => 'required|integer',
-            'kategori' => 'required|string',
+            'kategori_id' => 'required|integer',
             'jumlah' => 'required|string',
         ]);
 
         // Incoming::create($request->only('nama_barang', 'kategori', 'merk', 'jumlah'));
-        $request->user()->incomings()->create($request->only('stock_id', 'kategori', 'jumlah'));
+        $request->user()->incomings()->create($request->only('stock_id', 'kategori_id', 'jumlah'));
 
         return redirect()->route('incomings.index')->with('success', 'Barang berhasil ditambahkan');
 
@@ -84,7 +88,9 @@ class IncomingController extends Controller
      */
     public function edit(Incoming $incoming)
     {
-        return Inertia::render('Incoming/Edit', compact('incoming'));
+        $stocks = Stock::latest()->get();
+        $kategoris = Kategori::latest()->get();
+        return Inertia::render('Incoming/Edit', compact('incoming', 'stocks', 'kategoris'));
     }
 
     /**
@@ -97,15 +103,14 @@ class IncomingController extends Controller
     public function update(Request $request, Incoming $incoming)
     {
         $request->validate([
-            'nama_barang' => 'required|string',
-            'kategori' => 'required|string',
-            'merk' => 'required|string',
+            'stock_id' => 'required|integer',
+            'kategori_id' => 'required|integer',
             'jumlah' => 'required|integer',
         ]);
 
-        $incoming->update($request->only('nama_barang', 'kategori', 'merk', 'jumlah'));
+        $incoming->update($request->only('stock_id', 'kategori_id', 'jumlah'));
 
-        return back()->with('success', 'Barang berhasil diubah');
+        return redirect()->route('incomings.index')->with('success', 'Barang berhasil diubah');
     }
 
     /**

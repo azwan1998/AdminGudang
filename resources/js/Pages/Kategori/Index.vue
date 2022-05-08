@@ -1,10 +1,10 @@
 <template>
-    <AppLayout title="Barang Masuk">
+    <AppLayout title="Kategori">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Barang Masuk Index
-                <JetNavLink class="float-right" :href="route('incomings.create')" v-if="$page.props.permission.incomings.create">
-                <JetButton >Input Barang Masuk</JetButton>
+                Kategori Index
+                <JetNavLink class="float-right" :href="route('kategoris.create')" v-if="$page.props.permission.kategoris.create">
+                <JetButton >Input Kategori</JetButton>
                 </JetNavLink>
             </h2>
         </template>
@@ -15,7 +15,7 @@
           type="text"
           class="block ml-2 mb-4 w-60"
           v-model="form.search"
-          placeholder="Cari incoming..."
+          placeholder="Cari kategori..."
         />
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
           <div class="flex flex-col">
@@ -39,20 +39,7 @@
                           scope="col"
                           class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
-                          Nama Barang
-                        </th>
-                        <th
-                          scope="col"
-                          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                        >
-                          Kategori
-                        </th>
-                        
-                        <th
-                          scope="col"
-                          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                        >
-                          Jumlah
+                          Nama Kategori
                         </th>
                         <th
                           scope="col"
@@ -78,69 +65,58 @@
                       </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                      <tr v-if="!incomings.data.length">
+                      <tr v-if="!kategoris.data.length">
                         <td class="p-4 text-center text-gray-900" colspan="5">
                           No data
                         </td>
                       </tr>
-                      <tr v-for="incoming in incomings.data" :key="incoming.id">
+                      <tr v-for="kategori in kategoris.data" :key="kategori.id">
                         <td
                           class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
                         >
-                          {{ incoming.id }}
+                          {{ kategori.id }}
                         </td>
                         <td
                           class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
                         >
-                          {{ incoming.nama_barang }}
+                          {{ kategori.kategori }}
                         </td>
                         <td
                           class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
                         >
-                          {{ incoming.kategori }}
-                        </td>
-                        
-                        <td
-                          class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
-                        >
-                          {{ incoming.jumlah }}
+                          {{ kategori.created_at }}
                         </td>
                         <td
                           class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
                         >
-                          {{ incoming.created_at }}
-                        </td>
-                        <td
-                          class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
-                        >
-                          {{ incoming.updated_at }}
+                          {{ kategori.updated_at }}
                         </td>
                         <td
                           class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"
                         >
                           <JetNavLink
-                            :href="route('incomings.show', incoming.id)"
+                            :href="route('kategoris.show', kategori.id)"
                             class="text-indigo-600 hover:text-indigo-900"
-                            v-if="incoming.can.view"
+                            v-if="kategori.can.view"
                             >Show
                             </JetNavLink>
                           <JetNavLink
-                            :href="route('incomings.edit', incoming.id)"
+                            :href="route('kategoris.edit', kategori.id)"
                             class="ml-2 text-indigo-600 hover:text-indigo-900"
-                            v-if="incoming.can.update"
+                            v-if="kategori.can.update"
                             >Edit
                             </JetNavLink>
                           <button
-                            @click="deleteincoming(incoming.id)"
+                            @click="deletekategori(kategori.id)"
                             class="ml-2 text-red-600 hover:text-red-900"
-                            v-if="incoming.can.delete">
+                            v-if="kategori.can.delete">
                             Delete
                           </button>
                         </td>
                       </tr>
                     </tbody>
                   </table>
-                  <JetPagination class="m-5" :links="incomings.links" />
+                  <JetPagination class="m-5" :links="kategoris.links" />
                 </div>
               </div>
             </div>
@@ -171,7 +147,7 @@ export default {
   },
 
   props: {
-    incomings: Object,
+    kategoris: Object,
     filters: Object,
   },
 
@@ -185,20 +161,20 @@ export default {
       const query = pickBy(form);
 
       Inertia.replace(
-        route("incomings.index", Object.keys(query).length ? query : {})
+        route("kategoris.index", Object.keys(query).length ? query : {})
       );
     });
 
-    const deleteincoming = (incomingId) => {
+    const deletekategori = (kategoriId) => {
       const result = confirm("Apakah anda yakin?");
       if (result) {
-        Inertia.delete(route("incomings.destroy", incomingId), {
+        Inertia.delete(route("kategoris.destroy", kategoriId), {
           preserveScroll: true,
         });
       }
     };
 
-    return { form, deleteincoming };
+    return { form, deletekategori };
   },
 };
 </script>

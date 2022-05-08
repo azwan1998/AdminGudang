@@ -8,45 +8,30 @@
 
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <jet-form-section @submitted="createincoming">
+
+        <jet-form-section @submitted="createout">
           <template #title> Barang Keluar  </template>
 
           <template #description>Input Barang Keluar. </template>
 
           <template #form>
-            <!-- @foreach ($stock as $st) -->
-            <!-- Nama Barang -->
-            <div class="col-span-6 sm:col-span-4">
-              <jet-label for="kategori" value="Kategori" />
-               <select class="form-select form-select-lg mt-1 block w-full" aria-label=".form-select-lg example" v-model="form.kategori">
-                <option selected >Pilih Kategori</option>
-                <!-- <option value="Laptop" >{{ $st->kategori }}</option> -->
-              </select>
-              <jet-input-error :message="form.errors.kategori" class="mt-2" />
-            </div>
-            <!-- @endforeach -->
             <!-- Kategori -->
-            <div class="col-span-6 sm:col-span-4" >
-              <jet-label for="kategori" value="Kategori" />
-               <select class="form-select form-select-lg mt-1 block w-full" aria-label=".form-select-lg example" v-model="form.kategori" v-for="stock in stocks.data" :key="stock.id" >
-                <option value="" id="Laptop" > {{  stock.kategori }} </option>
-                <option value="Mouse" id="Mouse">Mouse</option>
-                <option value="Tikus" id="Tikus">Tikus</option>
+            <div class="col-span-6 sm:col-span-4">
+              <jet-label for="kategori_id" value="Kategori" />
+               <select class="form-select form-select-lg mt-1 block w-full" aria-label=".form-select-lg example" v-model="form.kategori_id">
+                <option v-for="kategori in kategoris" :key="kategori.id" v-bind:value="kategori.id" > {{  kategori.kategori  }}</option>
               </select>
               <jet-input-error :message="form.errors.kategori" class="mt-2" />
             </div>
 
-            <!-- Merk -->
+            <!-- Nama Barang -->
             <div class="col-span-6 sm:col-span-4">
-              <jet-label for="merk" value="Merk" />
-              <jet-input
-                id="merk"
-                type="text"
-                class="mt-1 block w-full"
-                v-model="form.merk"
-                autocomplete="merk"
-              />
-              <jet-input-error :message="form.errors.merk" class="mt-2" />
+              <jet-label for="stock_id" value="Pilih Barang" />
+               <select class="form-select form-select-lg mt-1 block w-full" aria-label=".form-select-lg example" v-model="form.stock_id"  >
+                <option selected >Pilih barang</option>
+                <option v-for="stock in stocks" :key="stock.id" v-bind:value="stock.id" > {{  stock.nama_barang  }}</option>
+              </select>
+              <jet-input-error :message="form.errors.stock_id" class="mt-2" />
             </div>
 
             <!-- Jumlah -->
@@ -107,17 +92,16 @@ export default {
     JetSelect,
   },
 
-  props: {
-    outs: Object,
+  props :{
     stocks:Array,
+    kategoris:Array,
   },
 
   setup() {
     const form = useForm({
       _method: "POST",
-      kategori: "",
-      kategori: "",
-      merk: "",
+      stock_id: "",
+      kategori_id: "",
       jumlah: "",
     });
 

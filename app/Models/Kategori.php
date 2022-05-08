@@ -2,20 +2,20 @@
 
 namespace App\Models;
 
-use App\Traits\HasCan;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\HasCan;
 
-class Incoming extends Model
+class Kategori extends Model
 {
     use HasFactory;
     use HasCan;
 
     protected $fillable = [
-        'stock_id',
-        'kategori_id',
-        'jumlah',
+     'kategori',
     ];
+
+    protected $guarded = ['id'];
 
     /**
      * The accessors to append to the model's array form.
@@ -40,17 +40,25 @@ class Incoming extends Model
     {
         $query->when($filters['search'] ?? null, function ($query, $search) {
             $query->where(function ($query) use ($search) {
-                $query->where('nama_barang', 'like', '%' . $search . '%')
-                    ->orWhere('kategori', 'like', '%' . $search . '%');
+                $query->where('kategori', 'like', '%' . $search . '%');
             });
         });
     }
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
     public function stocks()
     {
-        return $this->belongsToMany(Stock::class);
+        return $this->hasMany(Stock::class);
     }
-    public function kategoris()
+    public function incomings()
     {
-        return $this->belongsTo(Kategori::class);
+        return $this->hasMany(Incoming::class);
     }
+    public function outs()
+    {
+        return $this->hasMany(Out::class);
+    }
+
 }

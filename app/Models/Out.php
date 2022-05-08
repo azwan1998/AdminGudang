@@ -12,9 +12,8 @@ class Out extends Model
     use HasCan;
 
     protected $fillable = [
-        'nama_barang',
-        'kategori',
-        'merk',
+        'stock_id',
+        'kategori_id',
         'jumlah',
     ];
 
@@ -47,10 +46,10 @@ class Out extends Model
     }
     public function stocks()
     {
-        return $this->belongsTo(Stock::class);
+        return $this->belongsToMany(Stock::class);
     }
-    public function users()
+    public function kategori()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Kategori::class);
     }
 }
