@@ -29,5 +29,13 @@ class StockTableSeeder extends Seeder
         $stock2->jumlah = 11;
         $stock2->user_id = 1;
         $stock2->save();
+
+        $stock3 = new Stock;
+        $stock3->nama_barang = "Pantech Gaming Mouse";
+        $stock3->kategori_id = 2;
+        $stock3->merk = "Pantech";
+        $stock3->jumlah = 11;
+        $stock3->user_id = 1;
+        $stock3->save();
     }
 }
