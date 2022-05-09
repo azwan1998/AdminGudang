@@ -6,7 +6,6 @@
                 <JetNavLink class="float-right" :href="route('incomings.create')" v-if="$page.props.permission.incomings.create">
                 <JetButton >Input Barang Masuk</JetButton>
                 </JetNavLink>
-                
             </h2>
         </template>
 
@@ -18,9 +17,9 @@
           v-model="form.search"
           placeholder="Cari incoming..."
         />
-        <JetNavLink :href="route('incomings.pdf')" v-if="$page.props.permission.incomings.pdf">
+        <!-- <JetNavLink :href="route('incomings.pdf')" v-if="$page.props.permission.incomings.pdf">
           <JetButton >cetak pdf</JetButton>
-        </JetNavLink>
+        </JetNavLink> -->
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
           <div class="flex flex-col">
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">

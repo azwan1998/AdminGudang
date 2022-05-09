@@ -58,8 +58,7 @@ class OutController extends Controller
             'jumlah' => 'required|string',
         ]);
 
-        // Incoming::create($request->only('nama_barang', 'kategori', 'merk', 'jumlah'));
-        // $request->user()->outs()->create($request->only('stock_id', 'kategori_id', 'jumlah'));
+
 
         $out = $request->user()->outs()->create($request->only('stock_id', 'kategori_id', 'jumlah'));
         $out->stock()->update(['jumlah' => $out->stock->jumlah - $request->jumlah]);
@@ -76,7 +75,9 @@ class OutController extends Controller
      */
     public function show(Out $out)
     {
-        //
+        return Inertia::render('Out/Show', [
+            'outs' => Out::with('stock','kategori')->get(),
+        ]);
     }
 
     /**

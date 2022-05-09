@@ -1,37 +1,48 @@
 <template>
-    <GuestLayout title="Dashboard">
+    <AppLayout title="Dashboard">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Data Barang Show
+                Show Barang
             </h2>
         </template>
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 py-5">
-                    <h2 class="text-xl font-bold">{{ stock.nama_barang }}</h2>
-                    <!-- <div class="mb-2">Author : {{ post.user.name }}</div> -->
-                    <div class="whitespace-pre-line">{{ stock.kategori_id }}</div>
-                    <div class="whitespace-pre-line">{{ stock.merk }}</div>
-                    <div class="whitespace-pre-line">{{ stock.jumlah }}</div>
-                    <div class="whitespace-pre-line">{{ stock.created_at }}</div>
-                    <div class="whitespace-pre-line">{{ stock.updated_at }}</div>
+                    <a v-for="stock in stocks" :key="stock">
+                        Nama Barang = {{ stock.nama_barang }} <br>
+                        Kategori = {{ stock.kategori.kategori }} <br>
+                        jumlah = {{ stock.jumlah }} <br>
+                        Created At = {{ stock.created_at }} <br>
+                        Updated At = {{ stock.updated_at }} <br>
+                    </a>
+                    
                 </div>
             </div>
         </div>
-    </GuestLayout>
+    </AppLayout>
 </template>
 
 <script>
-import GuestLayout from '@/Layouts/GuestLayout.vue';
-
+import { reactive, watchEffect } from "vue";
+import { pickBy } from "lodash";
+import { Inertia } from "@inertiajs/inertia";
+import AppLayout from "@/Layouts/AppLayout";
+import JetButton from "@/Jetstream/Button";
+import JetInput from "@/Jetstream/Input";
+import JetPagination from "@/Components/Pagination";
+import JetNavLink from '@/Jetstream/NavLink.vue';
 export default {
   components: {
-    GuestLayout,
+    AppLayout,
+    JetButton,
+    JetInput,
+    JetPagination,
+    JetNavLink,
   },
 
-  props: {
-    stock: Object,
+  props:{
+      stocks:Array,
   },
 };
 </script>

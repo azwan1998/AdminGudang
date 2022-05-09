@@ -67,6 +67,7 @@
 </template>
 
 <script>
+import { reactive, watchEffect } from "vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 import AppLayout from "@/Layouts/AppLayout";
 import JetButton from "@/Jetstream/Button";

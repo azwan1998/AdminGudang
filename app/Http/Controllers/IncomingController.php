@@ -29,7 +29,7 @@ class IncomingController extends Controller
         // $stocks = Stock::latest()->get();
         // $kategoris = Kategori::latest()->get();
         return Inertia::render('Incoming/Index', [
-            'incomings' => Incoming::with('kategori', 'stock')->filter($request->only($queries))->paginate(4)->withQueryString(),
+            'incomings' => Incoming::with('kategori', 'stock')->filter($request->only($queries))->paginate(2)->withQueryString(),
             'filters' => $request->all($queries),
             // 'stocks' => $stocks,
             // 'kategoris' => $kategoris,
@@ -45,9 +45,6 @@ class IncomingController extends Controller
     {
         $stocks = Stock::latest()->get();
         $kategoris = Kategori::latest()->get();
-        
-        
-
         return Inertia::render('Incoming/Create', compact('stocks','kategoris'));
     }
 
@@ -81,7 +78,13 @@ class IncomingController extends Controller
      */
     public function show(Incoming $incoming)
     {
-        return Inertia::render('Incoming/Show', compact('incoming'));
+        // $stock = Stock::latest()->get();
+        // $kategori = Kategori::latest()->get();
+        // $incoming = Incoming::with('stock','kategori')->select('kategori.kategori')->get();
+        // dd($incoming);
+        return Inertia::render('Incoming/Show', [
+            'incomings' => Incoming::with('stock','kategori')->get(),
+        ]);
     }
 
     /**

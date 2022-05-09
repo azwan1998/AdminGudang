@@ -84,7 +84,9 @@ class StockController extends Controller
      */
     public function show(Stock $stock)
     {
-        return Inertia::render('Stock/Show', compact('stock'));
+        return Inertia::render('Stock/Show', [
+            'stocks' => Stock::with('kategori')->get(),
+        ]);
     }
 
     /**

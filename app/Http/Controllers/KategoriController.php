@@ -25,7 +25,7 @@ class KategoriController extends Controller
         $queries = ['search', 'page'];
 
         return Inertia::render('Kategori/Index', [
-            'kategoris' => Kategori::filter($request->only($queries))->paginate(4)->withQueryString(),
+            'kategoris' => Kategori::filter($request->only($queries))->paginate(2)->withQueryString(),
             'filters' => $request->all($queries),
         ]);
     }
